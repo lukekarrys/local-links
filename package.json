@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "browserify": "^5.10.0",
+    "domready": "^1.0.6",
     "jshint": "^2.5.3",
     "precommit-hook": "^1.0.7",
     "run-browser": "^1.3.1",

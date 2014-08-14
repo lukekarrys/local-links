@@ -1,3 +1,21 @@
+function isHTMLElement(obj) {
+    return (typeof obj === 'object') &&
+      (obj.nodeType === 1) && (typeof obj.style === 'object') &&
+      (typeof obj.ownerDocument ==='object');
+}
+
+function isA(obj) {
+    return isHTMLElement(obj) && obj.tagName === 'A';
+}
+
+function closestA(checkNode) {
+    do {
+        if (isA(checkNode)) {
+            return checkNode;
+        }
+    } while ((checkNode = checkNode.parentNode));
+}
+
 function normalizeLeadingSlash(pathname) {
     if (pathname.charAt(0) !== '/') {
         pathname = '/' + pathname;
@@ -12,6 +30,11 @@ function isLocal(event, anchor, lookForHash) {
 
     // Skip modifier events
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+        return null;
+    }
+
+    // Only test anchor elements
+    if (!anchor || !isA(anchor)) {
         return null;
     }
 
@@ -59,24 +82,6 @@ function isLocal(event, anchor, lookForHash) {
     return null;
 }
 
-function isHTMLElement(obj) {
-    return (typeof obj === 'object') &&
-      (obj.nodeType === 1) && (typeof obj.style === 'object') &&
-      (typeof obj.ownerDocument ==='object');
-}
-
-function isA(obj) {
-    return isHTMLElement(obj) && obj.tagName === 'A';
-}
-
-function closestA(checkNode) {
-    do {
-        if (isA(checkNode)) {
-            return checkNode;
-        }
-    } while ((checkNode = checkNode.parentNode));
-}
-
 function getEventAndAnchor() {
     var args = Array.prototype.slice.call(arguments);
     var obj = {
@@ -84,16 +89,26 @@ function getEventAndAnchor() {
         anchor: null
     };
 
-    args.forEach(function (arg) {
-        if (isHTMLElement(arg)) {
+    var arg;
+    for (var i = 0, m = args.length; i < m; i++) {
+        arg = args[i];
+        if (isHTMLElement(arg) && !obj.anchor) {
             obj.anchor = arg;
-        } else {
+        } else if (arg === Object(arg) && !obj.event) {
             obj.event = arg;
         }
-    });
+        if (obj.anchor && obj.event) {
+            break;
+        }
+    }
 
+    // Find the anchor tag from event.target if there is not one supplied
     if (!obj.anchor && obj.event && obj.event.target) {
         obj.anchor = closestA(obj.event.target);
+    }
+    // If the supplied element is not an anchor
+    else if (obj.anchor && !isA(obj.anchor)) {
+        obj.anchor = closestA(obj.anchor);
     }
 
     return [obj.event, obj.anchor];
@@ -106,7 +121,7 @@ module.exports = {
     hash: function () {
         return isLocal.apply(null, getEventAndAnchor.apply(null, arguments).concat(true));
     },
-    currentPage: function () {
+    active: function () {
         var args = Array.prototype.slice.call(arguments);
         var last = args[args.length - 1];
         var lastPath = typeof last === 'string' ? last : '';
