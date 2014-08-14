@@ -38,13 +38,19 @@ it would be a good module (that at least I would use all the time).
 ```js
 var local = require('local-links');
 
-// The method pathname will return the pathname as a string
+// `pathname()` will return the pathname as a string
 // if the link is local, otherwise it will return null
-
 local.pathname(document.getElementById('local')) // '/page2'
 local.pathname(document.getElementById('hash')) // null
 local.pathname(document.getElementById('googe')) // null
+
+// `hash()` will return the hash as a string
+// if the hash is to this page, otherwise it will return null
+local.hash(document.getElementById('local')) // null
+local.hash(document.getElementById('hash')) // '#hash'
+local.hash(document.getElementById('googe')) // null
 ```
+
 
 ## API
 
@@ -89,6 +95,13 @@ want to treat modified click events as external page clicks.
 
 Using the `pathname` method will return null for hash links that do not point
 to a different page. To get the hash for one of these links use the `hash()` method.
+
+
+### Tests
+
+Run `npm start` and open [`http://localhost:3000`](http://localhost:3000) to run the tests in your browser.
+
+To run the tests in the cli, just run `npm test`.
 
 
 ### License
