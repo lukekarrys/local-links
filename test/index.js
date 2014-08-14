@@ -123,8 +123,6 @@ domready(function () {
         t.end();
     });
 
-
-
     test('Active returns boolean based on current page', function (t) {
         t.plan(5);
 
