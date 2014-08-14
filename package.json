@@ -1,0 +1,50 @@
+{
+  "name": "local-links",
+  "description": "Determine cross-browser if an event or anchor element should be handled locally.",
+  "version": "1.0.0",
+  "author": "Luke Karrys <luke@lukekarrys.com>",
+  "bugs": {
+    "url": "https://github.com/lukekarrys/local-links/issues"
+  },
+  "devDependencies": {
+    "browserify": "^5.10.0",
+    "jshint": "^2.5.3",
+    "precommit-hook": "^1.0.7",
+    "run-browser": "^1.3.1",
+    "tap-spec": "^0.2.0",
+    "tape": "^2.14.0",
+    "tape-run": "^0.3.0"
+  },
+  "homepage": "https://github.com/lukekarrys/local-links",
+  "keywords": [
+    "local",
+    "links",
+    "IE"
+  ],
+  "license": "MIT",
+  "main": "local-links.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:lukekarrys/local-links.git"
+  },
+  "scripts": {
+    "start": "run-browser test/index.js",
+    "test": "browserify test/index.js | tape-run | tap-spec"
+  },
+  "testling": {
+    "files": "test/*.js",
+    "browsers": [
+      "ie/9..latest",
+      "firefox/17..latest",
+      "firefox/nightly",
+      "chrome/22..latest",
+      "chrome/canary",
+      "opera/12..latest",
+      "opera/next",
+      "safari/5.1..latest",
+      "ipad/6.0..latest",
+      "iphone/6.0..latest",
+      "android-browser/4.2..latest"
+    ]
+  }
+}
