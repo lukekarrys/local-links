@@ -1,5 +1,5 @@
 function isHTMLElement(obj) {
-    return (typeof obj === 'object') &&
+    return obj && (typeof obj === 'object') &&
       (obj.nodeType === 1) && (typeof obj.style === 'object') &&
       (typeof obj.ownerDocument ==='object');
 }
@@ -25,6 +25,7 @@ function normalizeLeadingSlash(pathname) {
 
 // [1] http://blogs.msdn.com/b/ieinternals/archive/2011/02/28/internet-explorer-window-location-pathname-missing-slash-and-host-has-port.aspx
 // [2] https://github.com/substack/catch-links/blob/7aee219cdc2c845c78caad6070886a9380b90e4c/index.js#L13-L17
+
 function isLocal(event, anchor, lookForHash) {
     event || (event = {});
 
@@ -44,7 +45,7 @@ function isLocal(event, anchor, lookForHash) {
     var aHost = anchor.host;
     var wHost = window.location.host;
 
-    // Some browsers return an empty string for anchor.hash
+    // Some browsers (Chrome 36) return an empty string for anchor.hash
     // even when href="#", so we also check the href
     var aHash = anchor.hash || (anchor.href.indexOf('#') > -1 ? '#' + anchor.href.split('#')[1] : null);
     var inPageHash;
@@ -84,34 +85,34 @@ function isLocal(event, anchor, lookForHash) {
 
 function getEventAndAnchor() {
     var args = Array.prototype.slice.call(arguments);
-    var obj = {
-        event: null,
-        anchor: null
-    };
-
+    var ev = null;
+    var anchor = null;
     var arg;
+
+    // Loop through arguments to see what was supplied
+    // Looking for an html element and/or an object
     for (var i = 0, m = args.length; i < m; i++) {
         arg = args[i];
-        if (isHTMLElement(arg) && !obj.anchor) {
-            obj.anchor = arg;
-        } else if (arg === Object(arg) && !obj.event) {
-            obj.event = arg;
+        if (isHTMLElement(arg) && !anchor) {
+            anchor = arg;
+        } else if (arg === Object(arg) && !ev) {
+            ev = arg;
         }
-        if (obj.anchor && obj.event) {
+        if (ev && anchor) {
             break;
         }
     }
 
     // Find the anchor tag from event.target if there is not one supplied
-    if (!obj.anchor && obj.event && obj.event.target) {
-        obj.anchor = closestA(obj.event.target);
+    if (!anchor && ev && ev.target) {
+        anchor = closestA(ev.target);
     }
     // If the supplied element is not an anchor
-    else if (obj.anchor && !isA(obj.anchor)) {
-        obj.anchor = closestA(obj.anchor);
+    else if (anchor && !isA(anchor)) {
+        anchor = closestA(anchor);
     }
 
-    return [obj.event, obj.anchor];
+    return [ev, anchor];
 }
 
 module.exports = {

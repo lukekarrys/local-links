@@ -8,11 +8,13 @@ function setup(html) {
     container.id = 'container';
     container.innerHTML = [
         '<a id="local" href="/local/page/1">Local</a>',
+        '<a id="relative" href="page-2">Relative</a>',
         '<a id="global" href="http://google.com/page/number/1">Global</a>',
         '<a href="/local/page/1"><span id="local-nested">Nested</span></a>',
         '<a id="empty-in-page-hash" href="#">Empty Hash</a>',
         '<a id="in-page-hash" href="#modal">Hash</a>',
-        '<a id="global-hash" href="http://google.com/#hash">Global Hash</a>'
+        '<a id="global-hash" href="http://google.com/#hash">Global Hash</a>',
+        '<a id="active" href="/">Active</a>',
     ].join('');
     document.body.appendChild(container);
 }
@@ -34,12 +36,14 @@ domready(function () {
         var a = $('local');
         var span = $('local-nested');
         var global = $('global');
+        var relative = $('relative');
 
-        t.plan(3);
+        t.plan(4);
 
         t.equal(localLinks.pathname(a), '/local/page/1');
         t.equal(localLinks.pathname(span), '/local/page/1');
         t.equal(localLinks.pathname(global), null);
+        t.equal(localLinks.pathname(relative), '/page-2');
 
         t.end();
     });
@@ -115,6 +119,35 @@ domready(function () {
         t.equal(localLinks.hash(emptyHash), '#');
 
         t.equal(localLinks.hash(globalHash), null);
+
+        t.end();
+    });
+
+
+
+    test('Active returns boolean based on current page', function (t) {
+        t.plan(5);
+
+        t.equal(localLinks.active($('active')), true);
+        t.equal(localLinks.active($('global')), false);
+        t.equal(localLinks.active($('local')), false);
+        t.equal(localLinks.active($('local'), '/local/page/1'), true);
+        t.equal(localLinks.active($('in-page-hash')), false);
+
+        t.end();
+    });
+
+    test('Return null for garbage', function (t) {
+        t.plan(8);
+
+        t.equal(localLinks.pathname(null), null);
+        t.equal(localLinks.pathname($('whoops')), null);
+        t.equal(localLinks.pathname({}, {}, {}, true), null);
+        t.equal(localLinks.pathname('hey'), null);
+        t.equal(localLinks.pathname(false), null);
+        t.equal(localLinks.hash({}), null);
+        t.equal(localLinks.hash('hey'), null);
+        t.equal(localLinks.hash(false), null);
 
         t.end();
     });
