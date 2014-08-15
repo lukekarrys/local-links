@@ -57,27 +57,27 @@ local.hash(document.getElementById('googe')) // null
 
 ### Methods
 
-- `pathname(Event or HTMLElement [, HTMLElement])`
+#### `pathname(Event or HTMLElement [, HTMLElement])`
 
 Returns the pathname if it is a non-hash local link, or null if it is not.
 Always includes the leading `/`.
 
-- `hash(Event or HTMLElement [, HTMLElement])`
+#### `hash(Event or HTMLElement [, HTMLElement])`
 
 Returns the hash if it is an in-page hash link, or null if it is not. Always
 includes the leading `#`.
 
-- `active(Event or HTMLElement [, comparePath])`
+#### `active(Event or HTMLElement [, comparePath])`
 
 Returns true/false depending on if the anchor pathname is equal to the `comparePath`
 (which defaults to `window.location.pathname`). Calls `pathname()` internally.
 
 
-#### Supply either Event or HTMLElement (or both!)
+#### Supply either Event or HTMLElement
 
-Both the above methods will accept an `Event` object, like the one you get from
-event handlers, or any `HTMLElement`. You can also supply an `Event` object
-and your own `HTMLElement` as the second parameter and it will take precedence.
+The above methods will accept an `Event` object, like the one you get from
+click event handlers, or any `HTMLElement`. You can also supply an `Event` object
+and a different `HTMLElement` as the second parameter and it will take precedence.
 
 If only an `Event` object is supplied, the `HTMLElement` will be found from
 `Event.target`.
@@ -92,7 +92,7 @@ element, the module will look up `parentNodes` until an anchor is found.
 #### Events
 
 If an `Event` object is supplied, all methods will return `null` if any of the following
-are true `altKey`, `ctrlKey`, `metaKey`, `shiftKey. This is because you almost always
+are true `altKey`, `ctrlKey`, `metaKey`, `shiftKey`. This is because you almost always
 want to treat modified click events as external page clicks.
 
 
@@ -109,6 +109,6 @@ Run `npm start` and open [`http://localhost:3000`](http://localhost:3000) to run
 To run the tests in the cli, just run `npm test`.
 
 
-### License
+#### License
 
 MIT
