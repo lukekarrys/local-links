@@ -2,12 +2,22 @@ var test = require('tape');
 var localLinks = require('../local-links');
 var domready = require('domready');
 
+function $(id) {
+    return document.getElementById(id);
+}
+
+function e(id) {
+    return {
+        target: $(id)
+    };
+}
 
 function setup(html) {
     var container = document.createElement('div');
     container.id = 'container';
     container.innerHTML = [
         '<a id="local" href="/local/page/1">Local</a>',
+        '<a id="local2" href="/local/page/1">Local2</a>',
         '<a id="relative" href="page-2">Relative</a>',
         '<a id="global" href="http://google.com/page/number/1">Global</a>',
         '<a href="/local/page/1"><span id="local-nested">Nested</span></a>',
@@ -20,15 +30,29 @@ function setup(html) {
     document.body.appendChild(container);
 }
 
-function $(id) {
-    return document.getElementById(id);
+function triggerClick(el, modified){
+    var ev = document.createEvent("MouseEvent");
+    ev.initMouseEvent(
+        "click",
+        true /* bubble */,
+        true /* cancelable */,
+        window, null,
+        0, 0, 0, 0, /* coordinates */
+        !!modified, false, false, false, /* modifier keys */
+        0 /*left*/,
+        null
+    );
+    el.dispatchEvent(ev);
 }
 
-function e(id) {
-    return {
-        target: $(id)
-    };
+function attachClick(el, fn) {
+    if (el.addEventListener) {
+        el.addEventListener('click', fn, false); 
+    } else if (el.attachEvent)  {
+        el.attachEvent('onclick', fn);
+    }
 }
+
 
 domready(function () {
     setup();
@@ -151,5 +175,57 @@ domready(function () {
         t.equal(localLinks.hash(false), null);
 
         t.end();
+    });
+
+    test('Works on link clicks', function (t) {
+        var local = $('local');
+        var global = $('global');
+        var plan = 2;
+        var count = 0;
+        var end = function () {
+            count++;
+            if (count === plan) {
+                t.end();
+            }
+        };
+
+        t.plan(plan);
+
+        attachClick(local, function (event) {
+            event.preventDefault();
+            t.equal(localLinks.pathname(event), '/local/page/1');
+            end();
+        });
+
+        attachClick(global, function (event) {
+            event.preventDefault();
+            t.equal(localLinks.pathname(event), null);
+            end();
+        });
+
+        triggerClick(local);
+        triggerClick(global);
+    });
+
+    test('Works on modified link clicks', function (t) {
+        var local = $('local2');
+        var plan = 1;
+        var count = 0;
+        var end = function () {
+            count++;
+            if (count === plan) {
+                t.end();
+            }
+        };
+
+        t.plan(plan);
+
+        attachClick(local, function (event) {
+            event.preventDefault();
+            t.equal(localLinks.pathname(event), null);
+            end();
+        });
+
+        triggerClick(local, true);
     });
 });

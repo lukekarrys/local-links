@@ -42,13 +42,13 @@ var local = require('local-links');
 // if the link is local, otherwise it will return null
 local.pathname(document.getElementById('local')) // '/page2'
 local.pathname(document.getElementById('hash')) // null
-local.pathname(document.getElementById('googe')) // null
+local.pathname(document.getElementById('google')) // null
 
 // `hash()` will return the hash as a string
 // if the hash is to this page, otherwise it will return null
 local.hash(document.getElementById('local')) // null
 local.hash(document.getElementById('hash')) // '#hash'
-local.hash(document.getElementById('googe')) // null
+local.hash(document.getElementById('google')) // null
 ```
 
 
