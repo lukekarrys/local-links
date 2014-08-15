@@ -76,7 +76,9 @@ function isLocal(event, anchor, lookForHash) {
         } else {
             // If this is an in page hash link
             // then ignore it because we werent looking for hash links
-            return inPageHash ? null : aPathname;
+            return inPageHash ?
+                null :
+                aPathname + (anchor.search || '') + (aHash || '');
         }
     }
 

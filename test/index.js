@@ -18,11 +18,13 @@ function setup(html) {
     container.innerHTML = [
         '<a id="local" href="/local/page/1">Local</a>',
         '<a id="local2" href="/local/page/1">Local2</a>',
+        '<a id="local-search" href="/local/page/1?param=2">Search</a>',
         '<a id="relative" href="page-2">Relative</a>',
         '<a id="global" href="http://google.com/page/number/1">Global</a>',
         '<a href="/local/page/1"><span id="local-nested">Nested</span></a>',
         '<a id="empty-in-page-hash" href="#">Empty Hash</a>',
         '<a id="in-page-hash" href="#modal">Hash</a>',
+        '<a id="out-of-page-hash" href="/local/page/1#two">Out of Page hash</a>',
         '<a id="global-hash" href="http://google.com/#hash">Global Hash</a>',
         '<a id="active" href="/">Active</a>',
         '<span id="no-anchor">No anchor</span>',
@@ -59,15 +61,19 @@ domready(function () {
 
     test('HTML elements return pathname or null', function (t) {
         var a = $('local');
+        var search = $('local-search');
+        var outHash = $('out-of-page-hash');
         var span = $('local-nested');
         var global = $('global');
         var relative = $('relative');
         var noAnchor = $('no-anchor');
 
-        t.plan(5);
+        t.plan(7);
 
         t.equal(localLinks.pathname(a), '/local/page/1');
         t.equal(localLinks.pathname(span), '/local/page/1');
+        t.equal(localLinks.pathname(search), '/local/page/1?param=2');
+        t.equal(localLinks.pathname(outHash), '/local/page/1#two');
         t.equal(localLinks.pathname(global), null);
         t.equal(localLinks.pathname(relative), '/page-2');
         t.equal(localLinks.pathname(noAnchor), null);
