@@ -83,32 +83,34 @@ function isLocal(event, anchor, lookForHash) {
     return null;
 }
 
-function getEventAndAnchor() {
-    var args = Array.prototype.slice.call(arguments);
+function getEventAndAnchor(arg1, arg2) {
     var ev = null;
     var anchor = null;
-    var arg;
 
-    // Loop through arguments to see what was supplied
-    // Looking for an html element and/or an object
-    for (var i = 0, m = args.length; i < m; i++) {
-        arg = args[i];
-        if (isHTMLElement(arg) && !anchor) {
-            anchor = arg;
-        } else if (arg === Object(arg) && !ev) {
-            ev = arg;
-        }
-        if (ev && anchor) {
-            break;
-        }
+    // Two arguments will come in this order
+    if (arguments.length === 2) {
+        ev = arg1;
+        anchor = arg2;
+    }
+    // If our first arg is an element
+    // then use that as our anchor
+    else if (isHTMLElement(arg1)) {
+        anchor = arg1;
+    }
+    // Otherwise our argument is an event
+    else {
+        ev = arg1;
     }
 
-    // Find the anchor tag from event.target if there is not one supplied
+    // If there is no anchor, but we have an event
+    // then use event.target
     if (!anchor && ev && ev.target) {
-        anchor = closestA(ev.target);
+        anchor = ev.target;
     }
-    // If the supplied element is not an anchor
-    else if (anchor && !isA(anchor)) {
+
+    // Last, if our anchor is not an anchor,
+    // see if we can find one in its parents
+    if (anchor && !isA(anchor)) {
         anchor = closestA(anchor);
     }
 
@@ -125,8 +127,13 @@ module.exports = {
     active: function () {
         var args = Array.prototype.slice.call(arguments);
         var last = args[args.length - 1];
-        var lastPath = typeof last === 'string' ? last : '';
-        return this.pathname.apply(null, args) ===
-            normalizeLeadingSlash(lastPath || window.location.pathname);
+        var checkPath = window.location.pathname;
+
+        if (typeof last === 'string') {
+            checkPath = last;
+            args = args.slice(0, -1);
+        }
+
+        return this.pathname.apply(null, args) === normalizeLeadingSlash(checkPath);
     }
 };

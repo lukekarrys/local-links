@@ -62,10 +62,15 @@ local.hash(document.getElementById('googe')) // null
 Returns the pathname if it is a non-hash local link, or null if it is not.
 Always includes the leading `/`.
 
-- `hash(Event or HTMLElement, [, HTMLElement])`
+- `hash(Event or HTMLElement [, HTMLElement])`
 
 Returns the hash if it is an in-page hash link, or null if it is not. Always
 includes the leading `#`.
+
+- `active(Event or HTMLElement [, comparePath])`
+
+Returns true/false depending on if the anchor pathname is equal to the `comparePath`
+(which defaults to `window.location.pathname`). Calls `pathname()` internally.
 
 
 #### Supply either Event or HTMLElement (or both!)

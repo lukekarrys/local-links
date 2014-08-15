@@ -15,6 +15,7 @@ function setup(html) {
         '<a id="in-page-hash" href="#modal">Hash</a>',
         '<a id="global-hash" href="http://google.com/#hash">Global Hash</a>',
         '<a id="active" href="/">Active</a>',
+        '<span id="no-anchor">No anchor</span>',
     ].join('');
     document.body.appendChild(container);
 }
@@ -37,13 +38,15 @@ domready(function () {
         var span = $('local-nested');
         var global = $('global');
         var relative = $('relative');
+        var noAnchor = $('no-anchor');
 
-        t.plan(4);
+        t.plan(5);
 
         t.equal(localLinks.pathname(a), '/local/page/1');
         t.equal(localLinks.pathname(span), '/local/page/1');
         t.equal(localLinks.pathname(global), null);
         t.equal(localLinks.pathname(relative), '/page-2');
+        t.equal(localLinks.pathname(noAnchor), null);
 
         t.end();
     });
@@ -73,7 +76,7 @@ domready(function () {
         t.end();
     });
 
-    test('Will use first anchor param first if it exists', function (t) {
+    test('Will use anchor from second arg', function (t) {
         var globalEvent = e(global);
         var globalA = $('global');
         var localA = $('local-nested');
@@ -81,8 +84,8 @@ domready(function () {
         t.plan(3);
 
         t.equal(localLinks.pathname(globalEvent, localA), '/local/page/1');
-        t.equal(localLinks.pathname(globalA, localA), null);
-        t.equal(localLinks.pathname(localA, globalA), '/local/page/1');
+        t.equal(localLinks.pathname(globalA, localA), '/local/page/1');
+        t.equal(localLinks.pathname(localA, globalA), null);
 
         t.end();
     });
