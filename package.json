@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "run-browser test/index.js",
-    "test": "browserify test/index.js | tape-run | tap-spec"
+    "test": "browserify test/index.js | tape-run --browser phantom | tap-spec"
   },
   "testling": {
     "files": "test/*.js",
