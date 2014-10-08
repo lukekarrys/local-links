@@ -8,8 +8,6 @@ Determine cross-browser if an event or anchor element should be handled locally.
 [![browser support](https://ci.testling.com/lukekarrys/local-links.png)
 ](https://ci.testling.com/lukekarrys/local-links)
 
-[![Build Status](https://travis-ci.org/lukekarrys/local-links.png?branch=master)](https://travis-ci.org/lukekarrys/local-links)
-
 ## Install
 
 `npm install local-links --save`
