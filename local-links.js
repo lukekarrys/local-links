@@ -50,12 +50,12 @@ function isLocal(event, anchor, lookForHash) {
     var aHash = anchor.hash || (anchor.href.indexOf('#') > -1 ? '#' + anchor.href.split('#')[1] : null);
     var inPageHash;
 
-    // Window has no port, but anchor does
-    if (!window.location.port && anchor.port) {
-        // IE9 sometimes includes the default port on anchor.host
+    // Window has no port, but anchor has the default port
+    if (!window.location.port && anchor.port && (anchor.port === '80' || anchor.port === '443')) {
+        // IE9 sometimes includes the default port (80 or 443) on anchor.host
         // so we append the default port to the window host in this case
         // so they will match for the host equality check [1]
-        wHost += ':80';
+        wHost += ':' + anchor.port;
     }
 
     // Hosts are the same, its a local link
