@@ -108,6 +108,9 @@ to a different page. To get the hash for one of these links use the `hash()` met
 
 Run `npm start` and open [`http://localhost:3000`](http://localhost:3000) to run the tests in your browser.
 
+It is also a good idea to run `sudo npm run start-80` (requires admin) which will run the tests on [`http://localhost`](http://localhost)
+because there can be unexpected behavior when the host has no port in [IE9](https://github.com/lukekarrys/local-links/blob/master/local-links.js#L26) and [IE10](https://github.com/lukekarrys/local-links/blob/master/local-links.js#L28).
+
 To run the tests in the cli, just run `npm test`.
 
 

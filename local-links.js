@@ -25,6 +25,9 @@ function normalizeLeadingSlash(pathname) {
 
 // [1] http://blogs.msdn.com/b/ieinternals/archive/2011/02/28/internet-explorer-window-location-pathname-missing-slash-and-host-has-port.aspx
 // [2] https://github.com/substack/catch-links/blob/7aee219cdc2c845c78caad6070886a9380b90e4c/index.js#L13-L17
+// [3] IE10 (and possibly later) report that anchor.port is the default port
+//     but dont append it to the hostname, so if the host doesnt end with the port
+//     append it to the anchor host as well
 
 function isLocal(event, anchor, lookForHash) {
     event || (event = {});
@@ -43,7 +46,9 @@ function isLocal(event, anchor, lookForHash) {
     var aPathname = normalizeLeadingSlash(anchor.pathname);
     var wPathname = normalizeLeadingSlash(window.location.pathname);
     var aHost = anchor.host;
+    var aPort = anchor.port;
     var wHost = window.location.host;
+    var wPort = window.location.port;
 
     // Some browsers (Chrome 36) return an empty string for anchor.hash
     // even when href="#", so we also check the href
@@ -51,11 +56,12 @@ function isLocal(event, anchor, lookForHash) {
     var inPageHash;
 
     // Window has no port, but anchor has the default port
-    if (!window.location.port && anchor.port && (anchor.port === '80' || anchor.port === '443')) {
+    if (!wPort && aPort && (aPort === '80' || aPort === '443')) {
         // IE9 sometimes includes the default port (80 or 443) on anchor.host
         // so we append the default port to the window host in this case
         // so they will match for the host equality check [1]
-        wHost += ':' + anchor.port;
+        wHost += ':' + aPort;
+        aHost += aHost.indexOf(aPort, aHost.length - aPort.length) === -1 ? ':' + aPort : ''; // [3]
     }
 
     // Hosts are the same, its a local link
