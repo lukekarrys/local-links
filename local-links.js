@@ -42,6 +42,11 @@ function isLocal(event, anchor, lookForHash) {
         return null;
     }
 
+    // Dont test anchors with target=_blank
+    if (anchor.target === '_blank') {
+        return null;
+    }
+
     // IE9 doesn't put a leading slash on anchor.pathname [1]
     var aPathname = normalizeLeadingSlash(anchor.pathname);
     var wPathname = normalizeLeadingSlash(window.location.pathname);

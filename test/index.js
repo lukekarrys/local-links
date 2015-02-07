@@ -28,6 +28,8 @@ function setup(html) {
         '<a id="global-hash" href="http://google.com/#hash">Global Hash</a>',
         '<a id="active" href="/">Active</a>',
         '<span id="no-anchor">No anchor</span>',
+        '<a id="local-blank" href="/local/page/1" target="_blank">Local Blank</a>',
+        '<a id="local-blank-hash" href="#modal2" target="_blank">Local Blank Hash</a>',
     ].join('');
     document.body.appendChild(container);
 }
@@ -67,8 +69,9 @@ domready(function () {
         var global = $('global');
         var relative = $('relative');
         var noAnchor = $('no-anchor');
+        var localBlank = $('local-blank');
 
-        t.plan(7);
+        t.plan(8);
 
         t.equal(localLinks.pathname(a), '/local/page/1');
         t.equal(localLinks.pathname(span), '/local/page/1');
@@ -77,6 +80,7 @@ domready(function () {
         t.equal(localLinks.pathname(global), null);
         t.equal(localLinks.pathname(relative), '/page-2');
         t.equal(localLinks.pathname(noAnchor), null);
+        t.equal(localLinks.pathname(localBlank), null);
 
         t.end();
     });
@@ -124,14 +128,17 @@ domready(function () {
         var hash = $('in-page-hash');
         var emptyHash = $('empty-in-page-hash');
         var globalHash = $('global-hash');
+        var targetBlankHash = $('local-blank-hash');
 
-        t.plan(5);
+        t.plan(7);
 
         t.equal(localLinks.pathname(hash), null);
         t.equal(localLinks.pathname(emptyHash), null);
+        t.equal(localLinks.pathname(targetBlankHash), null);
 
         t.equal(localLinks.hash(hash), '#modal');
         t.equal(localLinks.hash(emptyHash), '#');
+        t.equal(localLinks.hash(targetBlankHash), null);
 
         t.equal(localLinks.hash(globalHash), null);
 

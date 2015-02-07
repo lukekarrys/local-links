@@ -98,6 +98,12 @@ are true `altKey`, `ctrlKey`, `metaKey`, `shiftKey`. This is because you almost 
 want to treat modified click events as external page clicks.
 
 
+#### `target="_blank"`
+
+If the anchor has target="_blank" it will return `null` for both the `pathname()` and
+`hash()` methods.
+
+
 #### Hash links
 
 Using the `pathname` method will return null for hash links that do not point
