@@ -35,18 +35,25 @@ function setup(html) {
 }
 
 function triggerClick(el, modified){
-    var ev = document.createEvent("MouseEvent");
-    ev.initMouseEvent(
-        "click",
-        true /* bubble */,
-        true /* cancelable */,
-        window, null,
-        0, 0, 0, 0, /* coordinates */
-        !!modified, false, false, false, /* modifier keys */
-        0 /*left*/,
-        null
-    );
-    el.dispatchEvent(ev);
+    var ev;
+    if (document.createEvent) {
+        ev = document.createEvent("MouseEvent");
+        ev.initMouseEvent(
+            "click",
+            true /* bubble */,
+            true /* cancelable */,
+            window, null,
+            0, 0, 0, 0, /* coordinates */
+            !!modified, false, false, false, /* modifier keys */
+            0 /*left*/,
+            null
+        );
+        el.dispatchEvent(ev);
+    } else if (document.createEventObject) {
+        ev = document.createEventObject();
+        ev.ctrlKey = !!modified;
+        el.dispatchEvent('onclick', ev);
+    }
 }
 
 function attachClick(el, fn) {
