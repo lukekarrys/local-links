@@ -26,7 +26,7 @@ function setup(html) {
         '<a id="in-page-hash" href="#modal">Hash</a>',
         '<a id="out-of-page-hash" href="/local/page/1#two">Out of Page hash</a>',
         '<a id="global-hash" href="http://google.com/#hash">Global Hash</a>',
-        '<a id="active" href="/">Active</a>',
+        '<a id="active" href="' + window.location.pathname + '"">Active</a>',
         '<span id="no-anchor">No anchor</span>',
         '<a id="local-blank" href="/local/page/1" target="_blank">Local Blank</a>',
         '<a id="local-blank-hash" href="#modal2" target="_blank">Local Blank Hash</a>',

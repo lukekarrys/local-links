@@ -15,7 +15,8 @@
     "run-browser": "^1.3.1",
     "tap-spec": "^0.2.0",
     "tape": "^2.14.0",
-    "tape-run": "^0.3.0"
+    "tape-run": "^0.3.0",
+    "zuul": "^1.17.1"
   },
   "homepage": "https://github.com/lukekarrys/local-links",
   "keywords": [
@@ -32,22 +33,8 @@
   "scripts": {
     "start": "run-browser test/index.js",
     "start-80": "run-browser test/index.js --port 80",
-    "test": "browserify test/index.js | tape-run -b phantom | tap-spec"
-  },
-  "testling": {
-    "files": "test/*.js",
-    "browsers": [
-      "ie/9..latest",
-      "firefox/17..latest",
-      "firefox/nightly",
-      "chrome/22..latest",
-      "chrome/canary",
-      "opera/12..latest",
-      "opera/next",
-      "safari/5.1..latest",
-      "ipad/6.0..latest",
-      "iphone/6.0..latest",
-      "android-browser/4.2..latest"
-    ]
+    "test": "browserify test/index.js | tape-run -b phantom | tap-spec",
+    "test-travis": "npm test && zuul --ui tape -- test/index.js",
+    "zuul-local": "zuul --local 8080 --ui tape -- test/index.js"
   }
 }
