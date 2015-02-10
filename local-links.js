@@ -37,6 +37,12 @@ function isLocal(event, anchor, lookForHash) {
         return null;
     }
 
+    // If we have an anchor but its not an A tag
+    // try to find the closest one
+    if (anchor && !isA(anchor)) {
+        anchor = closestA(anchor);
+    }
+
     // Only test anchor elements
     if (!anchor || !isA(anchor)) {
         return null;
@@ -121,16 +127,12 @@ function getEventAndAnchor(arg1, arg2) {
         anchor = ev.target;
     }
 
-    // Last, if our anchor is not an anchor,
-    // see if we can find one in its parents
-    if (anchor && !isA(anchor)) {
-        anchor = closestA(anchor);
-    }
-
+    // Return an array so that it can be used with Function.apply
     return [ev, anchor];
 }
 
 module.exports = {
+    isLocal: isLocal,
     pathname: function () {
         return isLocal.apply(null, getEventAndAnchor.apply(null, arguments));
     },

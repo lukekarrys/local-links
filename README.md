@@ -69,10 +69,17 @@ Always includes the leading `/`.
 Returns the hash if it is an in-page hash link, or null if it is not. Always
 includes the leading `#`.
 
-#### `active(Event or HTMLElement [, comparePath])`
+#### `active(Event or HTMLElement [, String comparePath])`
 
 Returns true/false depending on if the anchor pathname is equal to the `comparePath`
 (which defaults to `window.location.pathname`). Calls `pathname()` internally.
+
+#### `isLocal(event, anchor, [, Boolean lookForHash])
+
+Returns the pathname (or hash if `lookForHash` is true) for local links, or null
+if it is not. This is used by `pathname()` and `hash()` under the hood. The main
+difference here is that you need to specify the `event` and `anchor` yourself, and
+the `anchor` wont be looked up from `event.target` like it would from the other methods.
 
 
 #### Supply either Event or HTMLElement
