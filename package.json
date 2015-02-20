@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "browserify": "^5.10.0",
-    "domready": "^0.3.0",
+    "domready": "0.3.0",
     "jshint": "^2.5.3",
     "phantomjs": "^1.9.10",
     "precommit-hook": "^1.0.7",
