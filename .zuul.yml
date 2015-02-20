@@ -6,3 +6,5 @@ browsers:
     version: 9..latest
   - name: firefox
     version: latest
+  - name: safari
+    version: latest
