@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "browserify": "^5.10.0",
-    "domready": "^1.0.6",
+    "domready": "^0.3.0",
     "jshint": "^2.5.3",
     "phantomjs": "^1.9.10",
     "precommit-hook": "^1.0.7",
@@ -34,7 +34,8 @@
     "start": "run-browser test/index.js",
     "start-80": "run-browser test/index.js --port 80",
     "test": "browserify test/index.js | tape-run -b phantom | tap-spec",
-    "test-travis": "npm test && zuul --ui tape -- test/index.js",
+    "test-travis": "npm test && npm run zuul",
+    "zuul": "zuul --ui tape -- test/index.js",
     "zuul-local": "zuul --local 8080 --ui tape -- test/index.js"
   }
 }

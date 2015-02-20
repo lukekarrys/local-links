@@ -7,12 +7,10 @@ function $(id) {
 }
 
 function e(id) {
-    return {
-        target: $(id)
-    };
+    return {target: $(id)};
 }
 
-function setup(html) {
+function setup() {
     var container = document.createElement('div');
     container.id = 'container';
     container.innerHTML = [
@@ -29,7 +27,7 @@ function setup(html) {
         '<a id="active" href="' + window.location.pathname + '"">Active</a>',
         '<span id="no-anchor">No anchor</span>',
         '<a id="local-blank" href="/local/page/1" target="_blank">Local Blank</a>',
-        '<a id="local-blank-hash" href="#modal2" target="_blank">Local Blank Hash</a>',
+        '<a id="local-blank-hash" href="#modal2" target="_blank">Local Blank Hash</a>'
     ].join('');
     document.body.appendChild(container);
 }
@@ -63,7 +61,6 @@ function attachClick(el, fn) {
         el.attachEvent('onclick', fn);
     }
 }
-
 
 domready(function () {
     setup();
