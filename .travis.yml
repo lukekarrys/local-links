@@ -4,8 +4,8 @@ node_js:
 before_install:
   - "export DISPLAY=:99.0"
   - sh -e /etc/init.d/xvfb start
-script: "npm run test-travis"
+script: npm run test-travis
 env:
   global:
-    - secure: DB5yShF80mHbwjQQK8v6Xh0/27wx5cDp55AqPyJPIW/t+PmhlLuA47ATRnxoAemhqLzvPEfDdoNuS61PrY40s36njK9xw0XuMLrrUvlRx0kBlENqihMXFIkuudQP8HgvnjSRALoDw7Unz5WK8HQ3VUp476IMmUAHiJxYsmVofUU=
-    - secure: GLB8tG/eFpmV5oaUK8Ncb5UCEsiOgNSMQmfjQhPn2bOZCNvxW+Dk7PppRUheaMZ+LIfPhM2WuTvKR2jYc65UoF4H44xxHPd+lC+P8o82DFn9U+IJFnq5CSg3sEC6yUuhdUJRENGVxa1WhTmIq4mMPh39C5ItYRx8kSn28FCQqx0=
+    - secure: Un33iUemAw5wmLHIzGCnnhMKIh0Q9XhTaiPI4ATjBVMSeDFkqe9rgtMYNiuK0hfbGX/sXS8Uj2EquprKScJAAK0eYa88AZlmg6QBOWP/xgwKa2yssndXDaaotj3Fz8OIi6BVGJO3ncaBbTJ1jaWvd9xAt2797uHqIrIN9LMtc3k=
+    - secure: obyvEZIlPTGQ83NnDZQTCCnRi3eyyFUSjEnsg2U2sG7z7iJ4aaG8mii8O55ITGsip/kT7fTK9pZwaa04LhUWV/brphLiEpij1Vnc/M2N09R+5wIpefvDAD0acDqBTPXgCzXliQNnk+RH3LxOY1eAxcbI1EAaqBmJchkF3ntMWBk=
