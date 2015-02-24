@@ -1,7 +1,7 @@
 {
   "name": "local-links",
   "description": "Determine cross-browser if an event or anchor element should be handled locally.",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Luke Karrys <luke@lukekarrys.com>",
   "bugs": {
     "url": "https://github.com/lukekarrys/local-links/issues"
