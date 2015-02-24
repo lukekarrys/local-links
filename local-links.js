@@ -102,6 +102,7 @@ function isLocal(event, anchor, lookForHash) {
     return null;
 }
 
+// Take two arguments and return an ordered array of [event, anchor]
 function getEventAndAnchor(arg1, arg2) {
     var ev = null;
     var anchor = null;
@@ -131,24 +132,35 @@ function getEventAndAnchor(arg1, arg2) {
     return [ev, anchor];
 }
 
+
+// Functions to be used in exports. Defined here for alias purposes
+function pathname () {
+    return isLocal.apply(null, getEventAndAnchor.apply(null, arguments));
+}
+
+function hash () {
+    return isLocal.apply(null, getEventAndAnchor.apply(null, arguments).concat(true));
+}
+
+function active () {
+    var args = Array.prototype.slice.call(arguments);
+    var last = args[args.length - 1];
+    var checkPath = window.location.pathname;
+
+    if (typeof last === 'string') {
+        checkPath = last;
+        args = args.slice(0, -1);
+    }
+
+    return pathname.apply(null, args) === normalizeLeadingSlash(checkPath);
+}
+
 module.exports = {
     isLocal: isLocal,
-    pathname: function () {
-        return isLocal.apply(null, getEventAndAnchor.apply(null, arguments));
-    },
-    hash: function () {
-        return isLocal.apply(null, getEventAndAnchor.apply(null, arguments).concat(true));
-    },
-    active: function () {
-        var args = Array.prototype.slice.call(arguments);
-        var last = args[args.length - 1];
-        var checkPath = window.location.pathname;
-
-        if (typeof last === 'string') {
-            checkPath = last;
-            args = args.slice(0, -1);
-        }
-
-        return this.pathname.apply(null, args) === normalizeLeadingSlash(checkPath);
-    }
+    pathname: pathname,
+    getLocalPathname: pathname,
+    hash: hash,
+    getLocalHash: hash,
+    active: active,
+    isActive: active
 };

@@ -1,6 +1,7 @@
 var test = require('tape');
 var localLinks = require('../local-links');
 var domready = require('domready');
+var partial = require('lodash.partial');
 
 function $(id) {
     return document.getElementById(id);
@@ -65,7 +66,7 @@ function attachClick(el, fn) {
 domready(function () {
     setup();
 
-    test('HTML elements return pathname or null', function (t) {
+    function _pathnameTest(method, t) {
         var a = $('local');
         var search = $('local-search');
         var outHash = $('out-of-page-hash');
@@ -77,15 +78,29 @@ domready(function () {
 
         t.plan(8);
 
-        t.equal(localLinks.pathname(a), '/local/page/1');
-        t.equal(localLinks.pathname(span), '/local/page/1');
-        t.equal(localLinks.pathname(search), '/local/page/1?param=2');
-        t.equal(localLinks.pathname(outHash), '/local/page/1#two');
-        t.equal(localLinks.pathname(global), null);
-        t.equal(localLinks.pathname(relative), '/page-2');
-        t.equal(localLinks.pathname(noAnchor), null);
-        t.equal(localLinks.pathname(localBlank), null);
+        t.equal(localLinks[method](a), '/local/page/1');
+        t.equal(localLinks[method](span), '/local/page/1');
+        t.equal(localLinks[method](search), '/local/page/1?param=2');
+        t.equal(localLinks[method](outHash), '/local/page/1#two');
+        t.equal(localLinks[method](global), null);
+        t.equal(localLinks[method](relative), '/page-2');
+        t.equal(localLinks[method](noAnchor), null);
+        t.equal(localLinks[method](localBlank), null);
 
+        t.end();
+    }
+    // Use this test for both pathname alias functions
+    test('HTML elements return pathname or null', partial(_pathnameTest, 'pathname'));
+    test('HTML elements return pathname or null', partial(_pathnameTest, 'getLocalPathname'));
+
+    test('Can be called with different context', function (t) {
+        var pathname = localLinks.pathname;
+        var hash = localLinks.hash;
+        var active = localLinks.active;
+        t.plan(3);
+        t.equal(pathname($('local')), '/local/page/1');
+        t.equal(hash($('in-page-hash')), '#modal');
+        t.equal(active($('active')), true);
         t.end();
     });
 
@@ -128,7 +143,7 @@ domready(function () {
         t.end();
     });
 
-    test('Test hash links', function (t) {
+    function _hashTest(method, t) {
         var hash = $('in-page-hash');
         var emptyHash = $('empty-in-page-hash');
         var globalHash = $('global-hash');
@@ -140,44 +155,31 @@ domready(function () {
         t.equal(localLinks.pathname(emptyHash), null);
         t.equal(localLinks.pathname(targetBlankHash), null);
 
-        t.equal(localLinks.hash(hash), '#modal');
-        t.equal(localLinks.hash(emptyHash), '#');
-        t.equal(localLinks.hash(targetBlankHash), null);
-
-        t.equal(localLinks.hash(globalHash), null);
+        t.equal(localLinks[method](hash), '#modal');
+        t.equal(localLinks[method](emptyHash), '#');
+        t.equal(localLinks[method](targetBlankHash), null);
+        t.equal(localLinks[method](globalHash), null);
 
         t.end();
-    });
+    }
+    // Use this test for both hash alias functions
+    test('Test hash links', partial(_hashTest, 'hash'));
+    test('Test hash links', partial(_hashTest, 'getLocalHash'));
 
-    test('Test hash links', function (t) {
-        var hash = $('in-page-hash');
-        var emptyHash = $('empty-in-page-hash');
-        var globalHash = $('global-hash');
-
+    function _activeTest(method, t) {
         t.plan(5);
 
-        t.equal(localLinks.pathname(hash), null);
-        t.equal(localLinks.pathname(emptyHash), null);
-
-        t.equal(localLinks.hash(hash), '#modal');
-        t.equal(localLinks.hash(emptyHash), '#');
-
-        t.equal(localLinks.hash(globalHash), null);
+        t.equal(localLinks[method]($('active')), true);
+        t.equal(localLinks[method]($('global')), false);
+        t.equal(localLinks[method]($('local')), false);
+        t.equal(localLinks[method]($('local'), '/local/page/1'), true);
+        t.equal(localLinks[method]($('in-page-hash')), false);
 
         t.end();
-    });
-
-    test('Active returns boolean based on current page', function (t) {
-        t.plan(5);
-
-        t.equal(localLinks.active($('active')), true);
-        t.equal(localLinks.active($('global')), false);
-        t.equal(localLinks.active($('local')), false);
-        t.equal(localLinks.active($('local'), '/local/page/1'), true);
-        t.equal(localLinks.active($('in-page-hash')), false);
-
-        t.end();
-    });
+    }
+    // Use this test for both active alias functions
+    test('Active returns boolean based on current page', partial(_activeTest, 'active'));
+    test('Active returns boolean based on current page', partial(_activeTest, 'isActive'));
 
     test('Return null for garbage', function (t) {
         t.plan(8);
