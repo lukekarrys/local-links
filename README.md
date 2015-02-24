@@ -58,22 +58,28 @@ local.hash(document.getElementById('google')) // null
 
 ### Methods
 
-#### `pathname(Event or HTMLElement [, HTMLElement])`
+#### `getLocalPathname(Event or HTMLElement [, HTMLElement])`
 
 Returns the pathname if it is a non-hash local link, or null if it is not.
 Always includes the leading `/`.
 
-#### `hash(Event or HTMLElement [, HTMLElement])`
+*Alias: `pathname`*
+
+#### `getLocalHash(Event or HTMLElement [, HTMLElement])`
 
 Returns the hash if it is an in-page hash link, or null if it is not. Always
 includes the leading `#`.
 
-#### `active(Event or HTMLElement [, String comparePath])`
+*Alias: `hash`*
+
+#### `isActive(Event or HTMLElement [, String comparePath])`
 
 Returns true/false depending on if the anchor pathname is equal to the `comparePath`
 (which defaults to `window.location.pathname`). Calls `pathname()` internally.
 
-#### `isLocal(event, anchor, [, Boolean lookForHash])
+*Alias: `active`*
+
+#### `isLocal(event, anchor, [, Boolean lookForHash])`
 
 Returns the pathname (or hash if `lookForHash` is true) for local links, or null
 if it is not. This is used by `pathname()` and `hash()` under the hood. The main
