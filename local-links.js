@@ -36,6 +36,10 @@ function isLocal(event, anchor, lookForHash) {
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
         return null;
     }
+    // Skip non-primary clicks
+    if (event.hasOwnProperty('button') && event.button !== 0) {
+      return null;
+    }
 
     // If we have an anchor but its not an A tag
     // try to find the closest one
