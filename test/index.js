@@ -17,6 +17,7 @@ function setup() {
     container.innerHTML = [
         '<a id="local" href="/local/page/1">Local</a>',
         '<a id="local2" href="/local/page/1">Local2</a>',
+        '<a id="local3" href="/local/page/1">Local3</a>',
         '<a id="local-search" href="/local/page/1?param=2">Search</a>',
         '<a id="relative" href="page-2">Relative</a>',
         '<a id="global" href="http://google.com/page/number/1">Global</a>',
@@ -33,8 +34,11 @@ function setup() {
     document.body.appendChild(container);
 }
 
-function triggerClick(el, modified){
+function triggerClick(el, modified, button){
     var ev;
+    if (button === undefined) {
+        button = 0; /*left*/
+    }
     if (document.createEvent) {
         ev = document.createEvent("MouseEvent");
         ev.initMouseEvent(
@@ -44,13 +48,14 @@ function triggerClick(el, modified){
             window, null,
             0, 0, 0, 0, /* coordinates */
             !!modified, false, false, false, /* modifier keys */
-            0 /*left*/,
+            button,
             null
         );
         el.dispatchEvent(ev);
     } else if (document.createEventObject) {
         ev = document.createEventObject();
         ev.ctrlKey = !!modified;
+        ev.button = button;
         el.dispatchEvent('onclick', ev);
     }
 }
@@ -246,5 +251,26 @@ domready(function () {
         });
 
         triggerClick(local, true);
+    });
+
+    test('Ignores middle clicks', function (t) {
+        var local = $('local3');
+        var plan = 1;
+        var count = 0;
+        var end = function () {
+            count++;
+            if (count === plan) {
+                t.end();
+            }
+        };
+
+        t.plan(plan);
+
+        attachClick(local, function(event) {
+          event.preventDefault();
+          t.equal(null, localLinks.pathname(event), 'should ignore middle-button clicks');
+        });
+
+        triggerClick(local, false, 1);
     });
 });
