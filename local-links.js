@@ -23,6 +23,12 @@ function normalizeLeadingSlash(pathname) {
     return pathname;
 }
 
+function isSecondaryButton (event) {
+    return (typeof event === 'object') &&
+        ('button' in event) &&
+        event.button !== 0;
+}
+
 // [1] http://blogs.msdn.com/b/ieinternals/archive/2011/02/28/internet-explorer-window-location-pathname-missing-slash-and-host-has-port.aspx
 // [2] https://github.com/substack/catch-links/blob/7aee219cdc2c845c78caad6070886a9380b90e4c/index.js#L13-L17
 // [3] IE10 (and possibly later) report that anchor.port is the default port
@@ -36,8 +42,9 @@ function isLocal(event, anchor, lookForHash) {
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
         return null;
     }
+
     // Skip non-primary clicks
-    if (event.hasOwnProperty('button') && event.button !== 0) {
+    if (isSecondaryButton(event)) {
       return null;
     }
 

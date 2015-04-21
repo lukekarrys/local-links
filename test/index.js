@@ -268,7 +268,7 @@ domready(function () {
 
         attachClick(local, function(event) {
           event.preventDefault();
-          t.equal(null, localLinks.pathname(event), 'should ignore middle-button clicks');
+          t.equal(localLinks.pathname(event), null, 'should ignore middle-button clicks');
         });
 
         triggerClick(local, false, 1);
