@@ -23,10 +23,8 @@ function normalizeLeadingSlash(pathname) {
     return pathname;
 }
 
-function isSecondaryButton (event) {
-    return (typeof event === 'object') &&
-        ('button' in event) &&
-        event.button !== 0;
+function isSecondaryButton(event) {
+    return (typeof event === 'object') && ('button' in event) && event.button !== 0;
 }
 
 // [1] http://blogs.msdn.com/b/ieinternals/archive/2011/02/28/internet-explorer-window-location-pathname-missing-slash-and-host-has-port.aspx
@@ -45,7 +43,7 @@ function isLocal(event, anchor, lookForHash) {
 
     // Skip non-primary clicks
     if (isSecondaryButton(event)) {
-      return null;
+        return null;
     }
 
     // If we have an anchor but its not an A tag
@@ -145,15 +143,15 @@ function getEventAndAnchor(arg1, arg2) {
 
 
 // Functions to be used in exports. Defined here for alias purposes
-function pathname () {
+function pathname() {
     return isLocal.apply(null, getEventAndAnchor.apply(null, arguments));
 }
 
-function hash () {
+function hash() {
     return isLocal.apply(null, getEventAndAnchor.apply(null, arguments).concat(true));
 }
 
-function active () {
+function active() {
     var args = Array.prototype.slice.call(arguments);
     var last = args[args.length - 1];
     var checkPath = window.location.pathname;
