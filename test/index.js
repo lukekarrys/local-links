@@ -1,6 +1,6 @@
 var test = require('tape')
 var localLinks = require('../local-links')
-var domready = require('domready')
+var jq = require('jquery')
 var partial = require('lodash.partial')
 
 function $ (id) {
@@ -37,20 +37,20 @@ function setup () {
 function triggerClick (el, modified, button) {
   var ev
   if (button === undefined) {
-    button = 0 /* left*/
+    button = 0 /* left */
   }
   if (document.createEvent) {
     ev = document.createEvent('MouseEvent')
     ev.initMouseEvent(
-            'click',
-            true /* bubble */,
-            true /* cancelable */,
-            window, null,
-            0, 0, 0, 0, /* coordinates */
-            !!modified, false, false, false, /* modifier keys */
-            button,
-            null
-        )
+      'click',
+      true /* bubble */,
+      true /* cancelable */,
+      window, null,
+      0, 0, 0, 0, /* coordinates */
+      !!modified, false, false, false, /* modifier keys */
+      button,
+      null
+    )
     el.dispatchEvent(ev)
   } else if (document.createEventObject) {
     ev = document.createEventObject()
@@ -68,7 +68,7 @@ function attachClick (el, fn) {
   }
 }
 
-domready(function () {
+jq(function () {
   setup()
 
   function _pathnameTest (method, t) {

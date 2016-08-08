@@ -2,9 +2,13 @@ ui: tape
 browsers:
   - name: chrome
     version: latest
-  - name: ie
-    version: 9..latest
+    platform: [Mac 10.10, Windows 10, Linux]
+  - name: microsoftedge
+    version: latest
   - name: firefox
     version: latest
+    platform: [Mac 10.10, Windows 10, Linux]
   - name: safari
     version: latest
+  - name: ie
+    version: 9..latest
