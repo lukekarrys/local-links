@@ -13,3 +13,5 @@ browsers:
     version: latest
   - name: ie
     version: 9..latest
+tunnel:
+  type: ngrok
