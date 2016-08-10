@@ -12,5 +12,6 @@ install:
 script: npm run lint && npm run validate && npm run test-travis
 env:
   global:
-    - secure: Un33iUemAw5wmLHIzGCnnhMKIh0Q9XhTaiPI4ATjBVMSeDFkqe9rgtMYNiuK0hfbGX/sXS8Uj2EquprKScJAAK0eYa88AZlmg6QBOWP/xgwKa2yssndXDaaotj3Fz8OIi6BVGJO3ncaBbTJ1jaWvd9xAt2797uHqIrIN9LMtc3k=
-    - secure: obyvEZIlPTGQ83NnDZQTCCnRi3eyyFUSjEnsg2U2sG7z7iJ4aaG8mii8O55ITGsip/kT7fTK9pZwaa04LhUWV/brphLiEpij1Vnc/M2N09R+5wIpefvDAD0acDqBTPXgCzXliQNnk+RH3LxOY1eAxcbI1EAaqBmJchkF3ntMWBk=
+  - secure: Un33iUemAw5wmLHIzGCnnhMKIh0Q9XhTaiPI4ATjBVMSeDFkqe9rgtMYNiuK0hfbGX/sXS8Uj2EquprKScJAAK0eYa88AZlmg6QBOWP/xgwKa2yssndXDaaotj3Fz8OIi6BVGJO3ncaBbTJ1jaWvd9xAt2797uHqIrIN9LMtc3k=
+  - secure: obyvEZIlPTGQ83NnDZQTCCnRi3eyyFUSjEnsg2U2sG7z7iJ4aaG8mii8O55ITGsip/kT7fTK9pZwaa04LhUWV/brphLiEpij1Vnc/M2N09R+5wIpefvDAD0acDqBTPXgCzXliQNnk+RH3LxOY1eAxcbI1EAaqBmJchkF3ntMWBk=
+  - secure: mpP00cq7xP+XGbdwfpL2X9k3PwfVuL1RnsnrrM+PqbYuWW3R7L/Gd3WmjfXEwrp8X474w4YQMgUJHuFNbPrcWF0XBrbtkUFQDl7uIForfNE8z5X3wOoT2WRcbtpML4RpmfC291leJg1uJfITUJUzB8nvVgY6U4W+VcIEKRCF5UI=
