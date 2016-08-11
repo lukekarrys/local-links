@@ -1,5 +1,4 @@
 ui: tape
-concurrency: 1
 browsers:
   - name: chrome
     version: latest
@@ -13,5 +12,7 @@ browsers:
     version: latest
   - name: ie
     version: 9..latest
+concurrency: 2
 tunnel:
   type: ngrok
+  bind_tls: true
