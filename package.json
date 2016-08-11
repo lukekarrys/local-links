@@ -17,8 +17,7 @@
     "tap-spec": "^4.1.1",
     "tape": "^4.6.0",
     "tape-run": "^2.1.4",
-    "zuul": "^3.10.3",
-    "zuul-ngrok": "^4.0.0"
+    "zuul": "^3.10.3"
   },
   "homepage": "https://github.com/lukekarrys/local-links",
   "keywords": [
