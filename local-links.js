@@ -25,6 +25,11 @@ function normalizeLeadingSlash (pathname) {
   return pathname
 }
 
+function isRelativeUrl (href) {
+  var r = /^https?:\/\/|^\/\//i
+  return !r.test(href)
+}
+
 function isSecondaryButton (event) {
   return (typeof event === 'object') && ('button' in event) && event.button !== 0
 }
@@ -71,6 +76,17 @@ function isLocal (event, anchor, lookForHash) {
   var aPort = anchor.port
   var wHost = window.location.host
   var wPort = window.location.port
+
+  // In some cases, IE will have a blank host property when the href
+  // is a relative URL. We can check for relativeness via the achor's
+  // href attribute and then set the anchor's host to the window's host.
+  if (aHost === '' &&
+    'attributes' in anchor &&
+    'href' in anchor.attributes &&
+    'value' in anchor.attributes.href &&
+    isRelativeUrl(anchor.attributes.href.value)) {
+    aHost = wHost
+  }
 
   // Some browsers (Chrome 36) return an empty string for anchor.hash
   // even when href="#", so we also check the href
