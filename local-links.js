@@ -25,9 +25,9 @@ function normalizeLeadingSlash (pathname) {
   return pathname
 }
 
-function isRelativeUrl(href) {
-    var r = /^https?:\/\/|^\/\//i;
-    return !r.test(href);
+function isRelativeUrl (href) {
+  var r = /^https?:\/\/|^\/\//i
+  return !r.test(href)
 }
 
 function isSecondaryButton (event) {
@@ -85,7 +85,7 @@ function isLocal (event, anchor, lookForHash) {
     'href' in anchor.attributes &&
     'value' in anchor.attributes.href &&
     isRelativeUrl(anchor.attributes.href.value)) {
-        aHost = wHost;
+    aHost = wHost
   }
 
   // Some browsers (Chrome 36) return an empty string for anchor.hash
