@@ -91,7 +91,7 @@ jq(function () {
     t.equal(localLinks[method](search), '/local/page/1?param=2')
     t.equal(localLinks[method](outHash), '/local/page/1#two')
     t.equal(localLinks[method](global), null)
-    t.equal(localLinks[method](relative), windowDir + '/page-2')
+    t.equal(localLinks[method](relative), (windowDir === '/' ? '' : windowDir) + '/page-2')
     t.equal(localLinks[method](noAnchor), null)
     t.equal(localLinks[method](localBlank), null)
 
