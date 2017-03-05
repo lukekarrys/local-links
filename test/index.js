@@ -2,6 +2,7 @@ var test = require('tape')
 var localLinks = require('../local-links')
 var jq = require('jquery')
 var partial = require('lodash.partial')
+var path = require('path')
 
 function $ (id) {
   return document.getElementById(id)
@@ -71,6 +72,8 @@ function attachClick (el, fn) {
 jq(function () {
   setup()
 
+  var windowDir = path.dirname(window.location.pathname)
+
   function _pathnameTest (method, t) {
     var a = $('local')
     var search = $('local-search')
@@ -88,7 +91,7 @@ jq(function () {
     t.equal(localLinks[method](search), '/local/page/1?param=2')
     t.equal(localLinks[method](outHash), '/local/page/1#two')
     t.equal(localLinks[method](global), null)
-    t.equal(localLinks[method](relative), '/page-2')
+    t.equal(localLinks[method](relative), windowDir + '/page-2')
     t.equal(localLinks[method](noAnchor), null)
     t.equal(localLinks[method](localBlank), null)
 
