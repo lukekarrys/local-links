@@ -38,10 +38,11 @@
     "url": "git@github.com:lukekarrys/local-links.git"
   },
   "scripts": {
+    "clean": "rm .source.* || true",
     "lint": "standard",
     "start": "run-browser test/index.js",
     "start-80": "run-browser test/index.js --port 80",
-    "test": "browserify test/index.js | tape-run -b electron | tap-spec",
+    "test": "browserify test/index.js | tape-run -b electron | tap-spec && npm run clean",
     "test-travis": "npm test && npm run zuul",
     "validate": "npm ls",
     "zuul": "zuul --ui tape -- test/index.js",
