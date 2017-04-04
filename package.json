@@ -7,7 +7,7 @@
     "url": "https://github.com/lukekarrys/local-links/issues"
   },
   "devDependencies": {
-    "browserify": "^14.0.0",
+    "browserify": "^14.3.0",
     "electron": "^1.6.1",
     "git-validate": "^2.1.4",
     "jquery": "^3.1.0",
