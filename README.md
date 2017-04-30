@@ -1,13 +1,13 @@
 local-links
 ===========
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/lukekarrys/local-links.svg)](https://greenkeeper.io/)
-
 Determine cross-browser if an event or anchor element should be handled locally.
 
 [![NPM](https://nodei.co/npm/local-links.png)](https://nodei.co/npm/local-links/)
 [![Build Status](https://travis-ci.org/lukekarrys/local-links.png?branch=master)](https://travis-ci.org/lukekarrys/local-links)
+[![Greenkeeper badge](https://badges.greenkeeper.io/lukekarrys/local-links.svg)](https://greenkeeper.io/)
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/lukekarrys-loclinks.svg)](https://saucelabs.com/u/lukekarrys-loclinks)
+
 
 ## Install
 
